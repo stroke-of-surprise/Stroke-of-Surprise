@@ -1,0 +1,56 @@
+# Bezier painter with 2-phase illusion sketch
+# Usage: python scripts/train.py --config_path config_files/defaults/bezier_2phase.yaml
+
+painter_type: bezier
+seed: 0
+num_iter: 2000
+
+# Data configuration
+data:
+  num_strokes: 32
+  render_size: 512
+  output_svg_size: 512
+  width: 2.5
+  
+  # 2-phase configuration (A/B mode)
+  caption_A: "a chicken"
+  caption_B: "a monkey"
+  split_stroke_num: 16
+  A_weight: 1.0
+  B_weight: 1.0
+  
+  # Prompt settings
+  text_prompt_suffix: "minimal 2d line drawing. on a white background."
+  negative_prompt: "unrealistic, blurry, low quality, out of focus"
+
+# Optimization configuration
+optim:
+  learning_rate: 0.8
+  sds_guidance_scale: 100.0
+  sds_grad_scale: 1.0
+  sds_t_range_min: 0.05
+  sds_t_range_max: 0.95
+  sds_time_schedule: random
+  sds_grad_method: sds
+  sds_loss_style: simple
+  
+  # Overlay loss to minimize intersection between phases
+  overlay_loss_type: dot
+  overlay_loss_weight: 5.0
+  overlay_blur_sigma: 2.0
+
+# Logging configuration  
+log:
+  output_dir: ./output/bezier
+  # run_name will be auto-generated from captions if not specified
+  save_interval: 100
+
+# Bezier-specific configuration
+bezier:
+  control_points_per_seg: 4
+  num_segments: 1
+  width: 2.5
+
+# Diffusion model
+sd_version: "1.5"
+

@@ -1,0 +1,20 @@
+accelerate==1.10.1
+clip @ git+https://github.com/openai/CLIP.git@dcba3cb2e2827b402d2701e7e1c7d9fed8a20ef1
+diffusers==0.31.1
+diffvg==0.0.1
+easydict==1.13
+matplotlib==3.7.0
+numpy==1.26.4
+opencv_python_headless==4.10.0.84
+packaging==26.0
+peft==0.17.0
+pillow==10.4.0
+pyrallis==0.3.1
+scikit-image==0.24.0
+scipy==1.13.1
+termcolor==3.0.0
+torch==2.3.1
+torchvision==0.18.1
+tqdm==4.64.1
+transformers==4.47.1
+webcolors==1.13

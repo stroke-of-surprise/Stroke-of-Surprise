@@ -1,0 +1,61 @@
+# B-spline painter with 2-phase illusion sketch
+# Usage: python scripts/train.py --config_path config_files/defaults/bspline_2phase.yaml
+
+painter_type: bspline
+seed: 0
+num_iter: 300
+
+# Data configuration
+data:
+  num_strokes: 10
+  render_size: 512
+  output_svg_size: 512
+  
+  # 2-phase configuration (A/B mode)
+  caption_A: "a chicken"
+  caption_B: "a monkey"
+  split_stroke_num: 6
+  A_weight: 1.0
+  B_weight: 1.0
+  
+  # Prompt settings
+  text_prompt_suffix: ""
+  negative_prompt: ""
+
+# Optimization configuration (BsplineSketch defaults)
+optim:
+  learning_rate: 3.0  # Not used for bspline (uses bspline.lr_pos/lr_width)
+  sds_guidance_scale: 7.5
+  sds_grad_scale: 0.01  # BsplineSketch: 0.01 for ism
+  sds_t_range_min: 0.5
+  sds_t_range_max: 0.98
+  sds_time_schedule: ism
+  sds_grad_method: ism
+  sds_loss_style: mse
+  
+  # Overlay loss
+  overlay_loss_type: dot
+  overlay_loss_weight: 1.0
+
+# Logging configuration  
+log:
+  output_dir: ./output/bspline
+  save_interval: 100
+
+# B-spline specific configuration
+bspline:
+  spline_degree: 5
+  multiplicity: 3  # BsplineSketch default: 3
+  num_control_points: 5  # BsplineSketch default: 5
+  init_mode: circular
+  width: 2.5
+  min_width: 1.0
+  max_width: 8.0
+  width_optim: true  # BsplineSketch: vary_stroke_width=1
+  lr_pos: 3.0  # Learning rate for control points
+  lr_width: 0.5  # Learning rate for stroke widths
+  smoothing_weight: 200.0  # BsplineSketch default: 200.0
+  smoothing_deriv: 3
+
+# Diffusion model
+sd_version: "1.5"

@@ -1,0 +1,119 @@
+# Neural (MLP/NeRF) painter with 2-phase illusion sketch
+# Usage: python scripts/train.py --config_path config_files/defaults/neural_2phase.yaml
+
+painter_type: neural
+seed: 0
+num_iter: 2000
+
+# Data configuration
+data:
+  num_strokes: 24
+  num_segments: 4
+  control_points_per_seg: 2  # NeuralSVG uses 2 (cubic bezier)
+  render_size: 512
+  output_svg_size: 512
+  width: 1.5
+  radius: 0.05
+  is_closed: true
+  use_background: true
+  
+  # 2-phase configuration
+  use_illusion_sketch: true
+  caption_A: "a rabbit"
+  caption_B: "a horse"
+  split_stroke_num: 16
+  A_weight: 1.0
+  B_weight: 1.0
+  
+  # Text prompts for target image generation (Neural pretrain)
+  generate_target_image: true
+  image_path_A: null
+  image_path_B: null
+  text_prompt_A: "minimalist vector art of a penguin, icon, isolated on white background"
+  text_prompt_B: "minimalist vector art of a monkey, icon, isolated on white background"
+  attn_init_xdog_intersec: true
+  attn_init_tau_max_min: [0.3, 0.3]
+  
+  # Prompt settings
+  text_prompt_suffix: ""
+  negative_prompt: "oversaturated, pixelated, foggy, hazy, blurry, bad structure, noisy, malformed, watermark, zoom"
+
+  segment_object: true
+
+# Optimization configuration (NeuralSVG defaults)
+optim:
+  scheduler_type: LIN_RAMP_COS_DECAY
+  learning_rate: 0.018
+  target_lr: 0.012
+  learning_rate_pretrain: 0.01
+  warmup_steps: 200
+  sds_weight: default
+  sds_guidance_scale: 100.0
+  sds_grad_scale: 0.001  # Smaller scale to prevent gradient explosion
+  sds_loss_style: simple
+  
+  # Gradient clipping
+  clip_grad_max_norm_colors: 0.1
+  clip_grad_max_norm_points: 0.01
+  
+  # Pretrain
+  pretrain: true
+  lambda_l2_pretraining: 1.0
+  max_steps_pretrain: 400
+  
+  # Overlay loss
+  overlay_loss_type: dot
+  overlay_loss_weight: 5.0
+
+# Logging configuration  
+log:
+  output_dir: ./output/neural
+  save_interval: 100
+
+# Neural-specific configuration
+neural:
+  mlp_dim: 128
+  mlp_num_layers: 2
+  input_dim: 128
+  use_color: true
+  
+  # Nested dropout for progressive rendering
+  use_nested_dropout: true
+  truncation_start_idx: 4
+  nested_dropout_sampling_method: exp_decay
+  start_nested_dropout_from_step: 200
+  
+  # Dropout value prediction
+  use_dropout_value: true
+  dropout_emb_dim: 16
+  dropout_last_item_prob: 0.7
+  dropout_temperature: 3
+  
+  # Color toggle for training with different backgrounds
+  toggle_color: true
+  toggle_color_method: rgb
+  toggle_color_input_dim: 12
+  toggle_color_bg_colors:
+    - light-red
+    - light-green
+    - light-blue
+    - gold
+    - gray
+  toggle_color_init_eps: 0.25
+  toggle_sample_random_color_prob: 0
+  
+  # Pretrain settings
+  generate_target_image: true
+  attn_init_xdog_intersec: true
+  
+  # LoRA weights
+  lora_weights: lora_weights/lora_weights_sd21b_bg_color.safetensors
+  
+  # Diffusion model
+  text2img_model: "SagiPolaczek/stable-diffusion-2-1-base"
+  
+  points_prediction_scale: 0.1
+
+# Diffusion model version
+sd_version: "2.1"
+seed: 42

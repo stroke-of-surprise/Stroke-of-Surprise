@@ -1,0 +1,21 @@
+[
+    {
+        "name": "phase_1",
+        "caption": "an apple",
+        "num_strokes": 16,
+        "weight": 1.0
+    },
+    {
+        "name": "phase_2", 
+        "caption": "an angel",
+        "num_strokes": 32,
+        "weight": 1.0
+    },
+    {
+        "name": "phase_3",
+        "caption": "a chef",
+        "num_strokes": 64,
+        "weight": 1.0
+    }
+]
+

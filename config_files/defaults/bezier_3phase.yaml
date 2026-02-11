@@ -1,0 +1,51 @@
+# Bezier painter with 3-phase illusion sketch
+# Usage: python scripts/train.py --config_path config_files/defaults/bezier_3phase.yaml
+
+painter_type: bezier
+seed: 0
+num_iter: 2000
+
+# Data configuration
+data:
+  num_strokes: 48
+  render_size: 512
+  output_svg_size: 512
+  width: 2.5
+  
+  # 3-phase configuration from JSON file
+  phases_config: config_files/examples/apple+angel+chef.json
+  
+  # Prompt settings
+  text_prompt_suffix: "minimal 2d line drawing. on a white background."
+  negative_prompt: "unrealistic, blurry, low quality, out of focus"
+
+# Optimization configuration
+optim:
+  learning_rate: 0.8
+  sds_guidance_scale: 100.0
+  sds_grad_scale: 10.0
+  sds_t_range_min: 0.05
+  sds_t_range_max: 0.95
+  sds_time_schedule: random
+  sds_grad_method: sds
+  sds_loss_style: simple
+  
+  # Overlay loss to minimize intersection between phases
+  overlay_loss_type: dot
+  overlay_loss_weight: 1.0
+  overlay_blur_sigma: 2.0
+
+# Logging configuration  
+log:
+  output_dir: ./output/bezier
+  save_interval: 100
+
+# Bezier-specific configuration
+bezier:
+  control_points_per_seg: 4
+  num_segments: 1
+  width: 2.5
+
+# Diffusion model
+sd_version: "1.5"
+
