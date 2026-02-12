@@ -9,10 +9,9 @@ _Stroke of Surprise generates vector sketches that progressively transform from 
 > Visual illusions traditionally rely on spatial manipulations such as multi-view consistency. In this work, we introduce Progressive Semantic Illusions, a novel vector sketching task where a single sketch undergoes a dramatic semantic transformation through the sequential addition of strokes. We present **Stroke of Surprise**, a generative framework that optimizes vector strokes to satisfy distinct semantic interpretations at different drawing stages. The core challenge lies in the ''dual-constraint'': initial prefix strokes must form a coherent object (e.g., a duck) while simultaneously serving as the structural foundation for a second concept (e.g., a sheep) upon adding delta strokes. To address this, we propose a sequence-aware joint optimization framework driven by a dual-branch Score Distillation Sampling (SDS) mechanism. Unlike sequential approaches that freeze the initial state, our method dynamically adjusts prefix strokes to discover a ''common structural subspace'' valid for both targets. Furthermore, we introduce a novel Overlay Loss that enforces spatial complementarity, ensuring structural integration rather than occlusion. Extensive experiments demonstrate that our method significantly outperforms state-of-the-art baselines in recognizability and illusion strength, successfully expanding visual anagrams from the spatial to the temporal dimension.
 
 <a href="docs/stroke_of_surprise_paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-blue" height=20.5></a>
+<a href="https://stroke-of-surprise.github.io/"><img src="https://img.shields.io/static/v1?label=Project&message=Website&color=red" height=20.5></a>
 
 <!-- <a href="https://arxiv.org/XXXXX"><img src="https://img.shields.io/badge/arXiv-26XX.XXXXX-b31b1b.svg"></a> -->
-
-<a href="https://stroke-of-surprise.github.io/"><img src="https://img.shields.io/static/v1?label=Project&message=Website&color=red" height=20.5></a>
 
 ## 🔥 NEWS
 
